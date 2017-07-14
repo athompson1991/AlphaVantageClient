@@ -1,6 +1,12 @@
 language: r
+pandoc_version: 1.16
 
 sudo: required
+
+addons:
+  apt:
+    packages:
+      - libxml2-dev
 
 os:
     - linux
