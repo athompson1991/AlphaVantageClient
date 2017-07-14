@@ -1,5 +1,5 @@
 context("Empty")
 
 test_that("Add", {
-  expect_equal(3, add(1,2))
+  expect_equal(2, add(1,1))
 })
