@@ -1,7 +1,8 @@
 language: r
 pandoc_version: 1.16
 
-sudo: required
+sudo: false
+cache: packages
 
 addons:
   apt:
