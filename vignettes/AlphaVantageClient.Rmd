@@ -1,0 +1,12 @@
+---
+title: "A simple package for loading data from Alpha Vantage into R objects."
+author: "Alex Thompson"
+date: \today
+output: pdf_document
+bibliography: references.bib
+vignette: >
+  %\VignetteIndexEntry{ A simple package for loading data from Alpha Vantage into R objects. }
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc} 
+---
+
