@@ -24,5 +24,15 @@ buildURLTimeSeries <- function(timeType, symbol, interval, outputsize="full", da
   valid_datatype <- c("json", "csv")
   valid_outputsize <- c("compact", "full")
   
-  
+  params_list <- list(
+    "function" = paste0("TIME_SERIES_", toupper(timeType))
+    ,"symbol" = symbol
+    ,"interval" = interval
+    ,"apikey" = api_key
+  )
+  url <- buildURL(params_list)
+  return(url)
 }
+
+
+
