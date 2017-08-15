@@ -10,14 +10,28 @@ buildURL <- function(named_list){
 }
 
 buildURLTimeSeries <- function(timeType, symbol, interval, outputsize, datatype){
+  timeType <- toupper(timeType)
+  symbol <- toupper(symbol)
+  
   valid_times <- c("INTRADAY", "DAILY", "DAILY_ADJUSTED", "WEEKLY", "MONTHLY")
   valid_intervals <- paste(c(1,5,15,30,60), "min", sep="")
-  valid_datatype <- c("json", "csv")
-  valid_outputsize <- c("compact", "full")
+  valid_datatypes <- c("json", "csv")
+  valid_outputsizes <- c("compact", "full")
+  
+  valid_list <- list(time = valid_times, interval = valid_intervals, datatype = valid_datatypes, outputsize = valid_outputsizes)
+  given_list <- list(time = timeType, interval = interval, datatype = datatype, outputsize = outputsize)
+  validated_logic <- validateArguments(valid_list, given_list)
+  
+  if(!(all(validated_logic))){
+    bad_args <- names(validated_logic[!(validated_logic)])
+    print_this <- paste0(bad_args, sep = ", ", collapse="")
+    print_this <- substr(print_this, 1, nchar(print_this) - 2)
+    stop(paste0("Invalid arguments: ", print_this))
+  }
   
   params_list <- list(
-    "function" = paste0("TIME_SERIES_", toupper(timeType))
-    ,"symbol" = toupper(symbol)
+    "function" = paste0("TIME_SERIES_", timeType)
+    ,"symbol" = symbol
     ,"interval" = interval
     ,"datatype" = datatype
     ,"outputsize" = outputsize
