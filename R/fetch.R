@@ -13,7 +13,7 @@
 fetchTimeSeries <- function(timeType = "intraday", symbol = "spy", interval = "5min", outputsize="full", datatype="csv"){
   out = NULL
   url <- buildURLTimeSeries(timeType = timeType, symbol = symbol, interval = interval, outputsize = outputsize, datatype = datatype)
-  print(url)
+  cat(paste0("\n\n", url, "\n"))
   resp <- httr::GET(url)
   if(httr::http_status(resp)$category == "Success") {
     string_val <- httr::content(resp, "text", encoding = "UTF-8")
@@ -24,7 +24,8 @@ fetchTimeSeries <- function(timeType = "intraday", symbol = "spy", interval = "5
     times <- raw_table[ ,1]
     df <- as.data.frame(raw_table[-1, ])
     colnames(df) <- col_names
-    out <- xts::xts(df[ ,-1], order.by = as.POSIXct(df$timestamp))
+    xts_table <- xts::xts(apply(df[ ,-1], 2, as.numeric), order.by = as.POSIXct(df$timestamp))
+    out <- xts_table
   }
   return(out)
 }
