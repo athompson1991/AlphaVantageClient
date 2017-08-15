@@ -12,7 +12,7 @@ fetchTimeSeries <- function(timeType = "intraday", symbol = "spy", interval = "5
     times <- raw_table[ ,1]
     df <- as.data.frame(raw_table[-1, ])
     colnames(df) <- col_names
-    out = xts::xts(df[ ,-1], order.by = as.POSIXct(df$timestamp))
+    out <- xts::xts(df[ ,-1], order.by = as.POSIXct(df$timestamp))
   }
   return(out)
 }
