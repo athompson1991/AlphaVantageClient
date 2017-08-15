@@ -13,7 +13,7 @@
 fetchTimeSeries <- function(timeType = "intraday", symbol = "spy", interval = "5min", outputsize="full", datatype="csv"){
   out = NULL
   url <- buildURLTimeSeries(timeType = timeType, symbol = symbol, interval = interval, outputsize = outputsize, datatype = datatype)
-  cat(paste0("\n\n", url, "\n"))
+  cat(paste0("\n", url, "\n"))
   resp <- httr::GET(url)
   if(httr::http_status(resp)$category == "Success") {
     string_val <- httr::content(resp, "text", encoding = "UTF-8")
