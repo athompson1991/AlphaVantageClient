@@ -6,6 +6,7 @@ Description: What the package does (one paragraph).
 Author: Alex Thompson
 Depends: R (>= 3.2.1)
 Imports:
+    httr
 Suggests:
     testthat,
     knitr,
