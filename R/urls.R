@@ -1,4 +1,4 @@
-buildURL <- function(named_list){
+urlHelper <- function(named_list){
   outURL <- paste0(Sys.getenv("AV_BASE_URL"), "?")
   for(i in 1:length(named_list)){
     k <- names(named_list)[i]
@@ -9,50 +9,28 @@ buildURL <- function(named_list){
   return(outURL)
 }
 
-buildURLTimeSeries <- function(timeType, symbol, interval, outputsize, datatype){
-  timeType <- toupper(timeType)
-  symbol <- toupper(symbol)
+buildURL <- function(function_nm, ...) {
+  function_nm <- toupper(function_nm)
   
-  given_list <- list(time = timeType, ts_interval = interval, datatype = datatype, outputsize = outputsize)
-  validated_logic <- validateArguments(validation_list, given_list)
+  if(!(tolower(function_nm) %in% names(technical_indicator_specification)))
+    stop("Invalid function_nm, must be in the list of available functions from Alpha Vantage documentation")
   
-  validationEasyPrint(validated_logic)
+  given_list <- list(...)
+  if(length(given_list) == 0){
+    required_args <- technical_indicator_specification[[tolower(function_nm)]][["required"]]
+    print_this <- good_print(required_args, "No additional arguments to function_nm, invalid query. Required args")
+    stop(print_this)
+  }
+  if("symbol" %in% names(given_list))
+    given_list[["symbol"]] <- toupper(given_list[["symbol"]])
   
-  params_list <- list(
-    "function" = paste0("TIME_SERIES_", timeType)
-    ,"symbol" = symbol
-    ,"interval" = interval
-    ,"datatype" = datatype
-    ,"outputsize" = outputsize
-    ,"apikey" = Sys.getenv("AV_API_KEY")
-  )
-  
-  url <- buildURL(params_list)
-  return(url)
-}
-
-buildURLTechnicalIndicator <- function(indicator, symbol, interval, other_args = list()){
-  indicator <- toupper(indicator)
-  symbol <- toupper(symbol)
-  key <- Sys.getenv("AV_API_KEY")
-  
-  given_list <- c(list(indicator = indicator, ti_interval = interval))
-  validation_logic <- validateArguments(valid_args = validation_list, given_args = given_list)
-  
+  check_these_args <- given_list[names(given_list) %in% names(validation_list)]
+  validation_logic <- validateArguments(valid_args = validation_list, given_args = check_these_args)
   validationEasyPrint(validation_logic)
-  checkForRequiredAndOptionalArgs(other_args = other_args, indicator = indicator)
   
-  params_list <- c(
-    list(
-      "function" = indicator,
-      "symbol" = symbol,
-      "interval" = interval
-    ),
-    other_args,
-    list("apikey" = key)
-  )
+  checkForRequiredAndOptionalArgs(given_list, function_nm)
+  params_list <- c(list("function" = function_nm), given_list, list("apikey" = Sys.getenv("AV_API_KEY")))
   
-  url <- buildURL(params_list)
+  url <- urlHelper(params_list)
   return(url)
 }
-

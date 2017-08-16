@@ -8,6 +8,13 @@ setAPIKey <- function(key="demo"){
   Sys.setenv(AV_BASE_URL="https://www.alphavantage.co/query")
 }
 
+good_print <- function(names_list, intro){
+  print_this <- paste0(intro, ": ")
+  print_this <- paste0(print_this, names_list, sep = ", ")
+  print_this <- substr(print_this, 1, nchar(print_this) - 2)
+  return(print_this)
+}
+
 validateArguments <- function(valid_args, given_args){
   valid_names <- names(valid_args)
   given_names <- names(given_args)
@@ -19,8 +26,8 @@ validateArguments <- function(valid_args, given_args){
   if(any(nchar(valid_names) == 0) || any(nchar(given_names) == 0))
     stop("Invalid arguments. Names must have length greater than 0")
   if(!all(given_names %in% valid_names)){
-    bad_names <- names(given_names[!(given_names %in% valid_names)])
-    print_this <- paste0("Arguments are missing from valid list: ", bad_names, sep = ",")
+    bad_names <- given_names[!(given_names %in% valid_names)]
+    print_this <- good_print(bad_names, "Arguments are missing from valid list")
     stop(print_this)
   }
   out_logic <- sapply(given_names, function(nm){
@@ -41,6 +48,7 @@ validationEasyPrint <- function(logic){
 }
 
 checkForRequiredAndOptionalArgs <- function(other_args, indicator){
+  
   indicator <- tolower(indicator)
   other_args_names <- names(other_args)
   strings <- c("required", "optional")
@@ -60,7 +68,8 @@ checkForRequiredAndOptionalArgs <- function(other_args, indicator){
     if(!(is.null(has_object)))
       if(!(has_object)){
         missing <- lookup_object[!(lookup_object %in% other_args_names)]
-        print_string <- paste0("All ", string, " arguments not met, missing: ", paste0(missing, sep = ",", collapse = ""))
+        print_string <- paste0("All ", string, " arguments not met, missing: ", paste0(missing, sep = ", ", collapse = ""))
+        print_string <- paste0(substr(print_string, 1, nchar(print_string) - 2))
         if(string == "required")
           stop(print_string)
         else
@@ -68,4 +77,21 @@ checkForRequiredAndOptionalArgs <- function(other_args, indicator){
       }
   }
 
+}
+
+
+isSuccessfulResponse <- function(response){
+  
+}
+
+isErrorResponse <- function(response) {
+  
+}
+
+isEmptyResponse <- function(response) {
+  
+}
+
+parseResponse <- function(response){
+  
 }
