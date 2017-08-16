@@ -1,4 +1,5 @@
 context("Fetch")
+cat("\n\nweird printout...\n")
 
 setAPIKey("KZFRGTQMS328Q5KP")
 

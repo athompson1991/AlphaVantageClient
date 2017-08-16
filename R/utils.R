@@ -18,13 +18,24 @@ validateArguments <- function(valid_args, given_args){
     stop("Invalid arguments. Lists must be named")
   if(any(nchar(valid_names) == 0) || any(nchar(given_names) == 0))
     stop("Invalid arguments. Names must have length greater than 0")
-  if(!all(given_names %in% valid_names))
-    stop("Arguments are missing from valid list")
-  
+  if(!all(given_names %in% valid_names)){
+    bad_names <- names(given_names[!(given_names %in% valid_names)])
+    print_this <- paste0("Arguments are missing from valid list: ", bad_names, sep = ",")
+    stop(print_this)
+  }
   out_logic <- sapply(given_names, function(nm){
     check_this <- valid_args[[nm]]
     given_args[nm] %in% check_this
   })
   
   return(out_logic)
+}
+
+validationEasyPrint <- function(logic){
+  if(!(all(logic))){
+    bad_args <- names(logic[!(logic)])
+    print_this <- paste0(bad_args, sep = ", ", collapse="")
+    print_this <- substr(print_this, 1, nchar(print_this) - 2)
+    stop(paste0("Invalid arguments: ", print_this))
+  }
 }

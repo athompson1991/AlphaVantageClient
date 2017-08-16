@@ -13,21 +13,10 @@ buildURLTimeSeries <- function(timeType, symbol, interval, outputsize, datatype)
   timeType <- toupper(timeType)
   symbol <- toupper(symbol)
   
-  valid_times <- c("INTRADAY", "DAILY", "DAILY_ADJUSTED", "WEEKLY", "MONTHLY")
-  valid_intervals <- paste(c(1,5,15,30,60), "min", sep="")
-  valid_datatypes <- c("json", "csv")
-  valid_outputsizes <- c("compact", "full")
+  given_list <- list(time = timeType, ts_interval = interval, datatype = datatype, outputsize = outputsize)
+  validated_logic <- validateArguments(validation_list, given_list)
   
-  valid_list <- list(time = valid_times, interval = valid_intervals, datatype = valid_datatypes, outputsize = valid_outputsizes)
-  given_list <- list(time = timeType, interval = interval, datatype = datatype, outputsize = outputsize)
-  validated_logic <- validateArguments(valid_list, given_list)
-  
-  if(!(all(validated_logic))){
-    bad_args <- names(validated_logic[!(validated_logic)])
-    print_this <- paste0(bad_args, sep = ", ", collapse="")
-    print_this <- substr(print_this, 1, nchar(print_this) - 2)
-    stop(paste0("Invalid arguments: ", print_this))
-  }
+  validationEasyPrint(validated_logic)
   
   params_list <- list(
     "function" = paste0("TIME_SERIES_", timeType)
@@ -42,5 +31,47 @@ buildURLTimeSeries <- function(timeType, symbol, interval, outputsize, datatype)
   return(url)
 }
 
+buildURLTechnicalIndicator <- function(indicator, symbol, interval, other_args = list()){
+  indicator <- toupper(indicator)
+  symbol <- toupper(symbol)
+  key <- Sys.getenv("AV_API_KEY")
+  
+  given_list <- c(list(indicator = indicator, ti_interval = interval))
+  validation_logic <- validateArguments(valid_args = validation_list, given_args = given_list)
+  
+  validationEasyPrint(validation_logic)
+  
+  other_arg_names <- names(other_args)
+  required_args <- technical_indicator_specification[[tolower(indicator)]][["required"]]
+  optional_args <- technical_indicator_specification[[tolower(indicator)]][["optional"]]
+  
+  has_requirements <- NULL
+  has_optional_args <- NULL
+  if(length(required_args) > 0)
+    has_requirements <- all(required_args %in% other_arg_names)
+  if(length(optional_args) > 0)
+    has_optional_args <- all(optional_args %in% other_arg_names)
+  
+  if(!(is.null(has_requirements)))
+    if(!(has_requirements))
+      stop(paste0("All required arguments not met, this still missing: ", paste0(required_args[!(required_args %in% other_arg_names)], sep = ",", collapse = "")))
 
+  if(!(is.null(has_optional_args)))
+    if(!(has_optional_args))
+      warning(paste0("All optional arguments not met, this still missing: ", paste0(optional_args[!(optional_args %in% other_arg_names)], sep = ",", collapse = "")))
+  
+  
+  params_list <- c(
+    list(
+      "function" = indicator,
+      "symbol" = symbol,
+      "interval" = interval
+    ),
+    other_args,
+    list("apikey" = key)
+  )
+  
+  url <- buildURL(params_list)
+  return(url)
+}
 

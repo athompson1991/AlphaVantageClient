@@ -16,12 +16,12 @@ fetchTimeSeries(timeType = "intraday", symbol = "spy", interval = "5min",
 
 \item{outputsize}{Either \code{compact} or \code{full}. Returns only 100 data points versus full-length time series.}
 
-\item{datatype}{Either \code{csv} or \code{json}.}
+\item{datatype}{Either \code{csv} or \code{json}. Currently only \code{csv} is available, but development of \code{json} is possible in the future.}
 }
 \value{
 An \code{xts} object with the time series data.
 }
 \description{
-This function allows the user to pull data of the five different time series types offered from Alpha Vantage: Intraday, Daily, Daily (Adj. Close),
+This function allows the user to pull data of the five different time series types offered using Alpha Vantage: Intraday, Daily, Daily (Adj. Close),
 Weekly, and Monthly.
 }
