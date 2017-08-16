@@ -39,3 +39,33 @@ validationEasyPrint <- function(logic){
     stop(paste0("Invalid arguments: ", print_this))
   }
 }
+
+checkForRequiredAndOptionalArgs <- function(other_args, indicator){
+  indicator <- tolower(indicator)
+  other_args_names <- names(other_args)
+  strings <- c("required", "optional")
+  
+  for(string in strings) {
+    lookup <- paste(string, "args", sep = "_", collapse = "")
+    has <- paste("has", string, sep = "_", collapse = "")
+    assign(lookup, technical_indicator_specification[[indicator]][[string]])
+    lookup_object <- get(lookup)
+    
+    if(length(lookup_object) > 0)
+      assign(has, all(lookup_object %in% other_args_names))
+    else
+      assign(has, NULL)
+    
+    has_object <- get(has)
+    if(!(is.null(has_object)))
+      if(!(has_object)){
+        missing <- lookup_object[!(lookup_object %in% other_args_names)]
+        print_string <- paste0("All ", string, " arguments not met, missing: ", paste0(missing, sep = ",", collapse = ""))
+        if(string == "required")
+          stop(print_string)
+        else
+          warning(print_string)
+      }
+  }
+
+}

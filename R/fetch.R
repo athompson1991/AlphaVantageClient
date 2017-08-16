@@ -40,6 +40,6 @@ fetchTimeSeries <- function(timeType = "intraday", symbol = "spy", interval = "5
 
 
 fetchTechnicalIndicator <- function(indicator = "stoch", symbol = "spy", interval = "daily", other_args = list()){
-  url <- buildURLTechnicalIndicator(indicator = indicator, symbol = symbol, interval = interval)
+  url <- buildURLTechnicalIndicator(indicator = indicator, symbol = symbol, interval = interval, other_args = other_args)
   
 }

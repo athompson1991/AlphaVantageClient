@@ -40,26 +40,7 @@ buildURLTechnicalIndicator <- function(indicator, symbol, interval, other_args =
   validation_logic <- validateArguments(valid_args = validation_list, given_args = given_list)
   
   validationEasyPrint(validation_logic)
-  
-  other_arg_names <- names(other_args)
-  required_args <- technical_indicator_specification[[tolower(indicator)]][["required"]]
-  optional_args <- technical_indicator_specification[[tolower(indicator)]][["optional"]]
-  
-  has_requirements <- NULL
-  has_optional_args <- NULL
-  if(length(required_args) > 0)
-    has_requirements <- all(required_args %in% other_arg_names)
-  if(length(optional_args) > 0)
-    has_optional_args <- all(optional_args %in% other_arg_names)
-  
-  if(!(is.null(has_requirements)))
-    if(!(has_requirements))
-      stop(paste0("All required arguments not met, this still missing: ", paste0(required_args[!(required_args %in% other_arg_names)], sep = ",", collapse = "")))
-
-  if(!(is.null(has_optional_args)))
-    if(!(has_optional_args))
-      warning(paste0("All optional arguments not met, this still missing: ", paste0(optional_args[!(optional_args %in% other_arg_names)], sep = ",", collapse = "")))
-  
+  checkForRequiredAndOptionalArgs(other_args = other_args, indicator = indicator)
   
   params_list <- c(
     list(
