@@ -18,8 +18,3 @@ A two element list: the first element is the \code{xts} object named \code{xts_o
 This is the main function that pulls data directly from Alpha Vantage into a convenient \code{xts} object. This is a general function
 that reflects exactly the documentation listed \href{https://www.alphavantage.co/documentation/}{online}.
 }
-\examples{
-amzn <- fetchSeries(function_nm = "time_series_daily", symbol = "amzn", outputsize = "full", datatype = "json")
-print(head(amzn$xts_object))
-plot(amzn$xts_object[ ,1])
-}
