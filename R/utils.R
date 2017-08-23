@@ -79,19 +79,42 @@ checkForRequiredAndOptionalArgs <- function(other_args, indicator){
 
 }
 
-
 isSuccessfulResponse <- function(response){
-  
+  response_names <- names(httr::content(response))
+  logic <- response_names[1] == "Meta Data" & grepl("Time Series|Technical Analysis", response_names[2])
+  return(logic)
 }
 
 isErrorResponse <- function(response) {
-  
+  response_names <- names(httr::content(response))
+  return(length(response_names) == 1 && response_names == "Error Message")
 }
 
 isEmptyResponse <- function(response) {
-  
+  length(names(httr::content(response))) == 0
 }
 
 parseResponse <- function(response){
+  if(isErrorResponse(response))
+    stop("Bad response, error")
+  if(isEmptyResponse(response))
+    stop("Bad response, empty")
   
+  if(isSuccessfulResponse(response)){
+    main_content <- httr::content(response)
+    meta_data <- unlist(main_content[["Meta Data"]])
+    main_data <- main_content[[2]]
+    
+    main_data_colnames <- names(main_data[[1]])
+    if(length(main_data_colnames) == 1)
+      main_matrix <- as.matrix(unlist(main_data))
+    else {
+      main_matrix <- do.call(rbind, lapply(main_data, unlist))
+    }
+    colnames(main_matrix) <- main_data_colnames
+    dates <- as.POSIXct(row.names(main_matrix))
+    out_xts <- xts::xts(x = apply(main_matrix, 2, as.numeric), order.by = dates)
+  }
+  out <- list(xts_object = out_xts, httr_response = response)
+  return(out)
 }
