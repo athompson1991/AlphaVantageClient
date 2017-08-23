@@ -5,7 +5,7 @@
 
 ## Introduction
 
-![Alpha Vantage](https://www.alphavantage.co/) is a free API which provides both real time and historical stock market data. It is easy to get an API key, intraday data is available, and many technical indicators are included in the service. This package is a simple wrapper client to get data from the API into easy-to-use R objects, namely `xts`.
+Alpha Vantage is a free API which provides both real time and historical stock market data. It is easy to get an API key, intraday data is available, and many technical indicators are included in the service. This package is a simple wrapper client to get data from the API into easy-to-use R objects, namely `xts`.
 
 ## Step One: Set API Key
 
@@ -20,5 +20,12 @@ setAPIKey("ABCD")
 Here is how to get daily time series loaded directly into an `xts` object:
 
 ```{r}
-amzn <- fetchTimeSeries(timeType = "daily_adjusted", symbol="amzn")
+amzn <- fetchSeries(function_nm = "time_series_daily", symbol = "amzn", outputsize = "full", datatype = "json")
+```
+
+Now it can be plotted, analyzed, manipulated into returns, etc.:
+
+```{r}
+head(amzn$xts_object)
+plot(amzn$xts_object[ ,1])
 ```
