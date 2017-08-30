@@ -8,6 +8,12 @@ setAPIKey <- function(key="demo"){
   Sys.setenv(AV_BASE_URL="https://www.alphavantage.co/query")
 }
 
+checkAPIKey <- function() {
+  if(Sys.getenv("AV_API_KEY") == "") {
+    stop("API key not set. Use setAPIKey() to set key")
+  }
+}
+
 good_print <- function(names_list, intro){
   print_this <- paste0(intro, ": ")
   print_this <- paste0(print_this, names_list, sep = ", ")

@@ -8,8 +8,13 @@
 #' @return A two element list: the first element is the \code{xts} object named \code{xts_object} and the second is the raw http response named \code{httr_response} (see \code{httr} package for details on this class)
 #' @export
 fetchSeries <- function(function_nm, ...) {
+  checkAPIKey()
   url <- buildURL(function_nm, ...)
   response <- httr::GET(url)
-  out <- parseResponse(response)
-  return(out)
+  tryCatch({
+    out <- parseResponse(response)
+    return(out)
+  }, error = function(err){
+    list(xts_object = err$message, httr_response = response)
+  })
 }
