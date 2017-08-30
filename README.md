@@ -30,3 +30,9 @@ Now it can be plotted, analyzed, manipulated into returns, etc.:
 head(amzn$xts_object)
 plot(amzn$xts_object[ ,1])
 ```
+
+Similarly, the other Alpha Vantage offerings such as technical indicators and sector performance are available:
+
+```{r}
+amzn_sma <- fetchSeries(function_nm = "sma", symbol = "amzn", interval = "daily", time_period = 60, series_type = "close")
+```
