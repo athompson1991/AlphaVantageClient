@@ -2,7 +2,7 @@ Package: AlphaVantageClient
 Title: A simple package for loading data from Alpha Vantage into R objects.
 Version: 0.0.1
 Maintainer: Alex Thompson <alexthompson1991@hotmail.com>
-Description: What the package does (one paragraph).
+Description: This package serves as a way to easily get data from the Alpha Vantage API into usable R objects. Time series prices and technical indicators are available with this package.
 Author: Alex Thompson
 Depends: R (>= 3.2.1)
 Imports:
