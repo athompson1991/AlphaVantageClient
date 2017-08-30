@@ -8,6 +8,7 @@ addons:
   apt:
     packages:
       - libxml2-dev
+      - texlive-latex-extra
 
 os:
     - linux
