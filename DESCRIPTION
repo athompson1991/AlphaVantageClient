@@ -11,7 +11,9 @@ Imports:
 Suggests:
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    mockery,
+    httptest
 VignetteBuilder: knitr
 License: MIT
 Encoding: UTF-8
