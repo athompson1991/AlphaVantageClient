@@ -1,8 +1,13 @@
 Package: AlphaVantageClient
-Title: A Simple Package for Loading Data from Alpha Vantage into R Objects
+Title: Wrapper for Alpha Vantage API
 Version: 0.0.1
 Maintainer: Alex Thompson <alexthompson1991@hotmail.com>
-Description: A way to easily get data from Alpha Vantage. Time series prices and technical indicators are available with this package.
+Description: Download data from the Alpha Vantage API (<https://www.alphavantage.co/>).
+    Alpha Vantage is a RESTful API which provides various financial data, 
+    including stock prices and technical indicators. 
+    There is documentation for the underlying API available 
+    here: <https://www.alphavantage.co/documentation/>. To get access to this API,
+    the user needs to first claim an API key: <https://www.alphavantage.co/support/>.
 Author: Alex Thompson
 Depends: R (>= 3.2.1)
 Imports:
@@ -19,5 +24,4 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/athompson1991/AlphaVantageClient
-BugRepots: https://github.com/athompson1991/AlphaVantageClient/issues
 RoxygenNote: 6.0.1

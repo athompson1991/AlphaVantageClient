@@ -10,9 +10,7 @@ Alpha Vantage is a free API which provides both real time and historical stock m
 
 ## Installation
 
-To install the package, simply use the `devtools::install_github("athompson1991/AlphaVantageClient")` command. Obviously this means that the `devtools` package needs to be installed, but it should be straightforward. If the operating system is Ubuntu, then R may need to be run as sudo.
-
-
+This package is available on CRAN and can be installed with `install.packages("AlphaVantageClient")`. To install this Github version, use `devtools::install_github("athompson1991/AlphaVantageClient")`./
 
 ## Usage
 
