@@ -7,7 +7,7 @@
 
 ## Introduction
 
-Alpha Vantage is a free API which provides both real time and historical stock market data. It is easy to get an API key, intraday data is available, and many technical indicators are included in the service. This package is a simple wrapper client to get data from the API into easy-to-use R objects, namely `xts`.
+[Alpha Vantage](https://www.alphavantage.co/) is a free API which provides both real time and historical stock market data. It is easy to get an API key, intraday data is available, and many technical indicators are included in the service. This package is a simple wrapper client to get data from the API into easy-to-use R objects, namely `xts`.
 
 ## Installation
 
