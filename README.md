@@ -11,7 +11,10 @@
 
 ## Installation
 
-This package is available on CRAN and can be installed with `install.packages("AlphaVantageClient")`. To install this Github version, use `devtools::install_github("athompson1991/AlphaVantageClient")`./
+This package is available on CRAN and can be installed with `install.packages("AlphaVantageClient")`.
+
+
+To install this Github version, use `devtools::install_github("athompson1991/AlphaVantageClient")`.
 
 ## Usage
 
