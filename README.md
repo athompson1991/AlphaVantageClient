@@ -17,7 +17,7 @@ This package is available on CRAN and can be installed with `install.packages("A
 
 ### Step One: Set API Key
 
-First, set your API key:
+First, set your API key (Note: this is a 100% fake API key. Get key [here](https://www.alphavantage.co/support/#api-key) if you don't already have one):
 
 ```{r}
 setAPIKey("ABCD")
