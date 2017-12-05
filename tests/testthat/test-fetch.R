@@ -1,6 +1,6 @@
 context("Fetch")
 
-setAPIKey(readLines("./api-key.txt"))
+setAPIKey()
 
 test_that("fetchSeries object is as expected", {
   expect_equal(names(fetch_list$good), c("xts_object", "httr_response"))
