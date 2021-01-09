@@ -8,7 +8,7 @@ test_that("fetchSeries object is as expected", {
   expect_equal(fetch_list$bad$xts_object, "Bad response, error")
 })
 
-httptest::with_mock_API({
+httptest::with_mock_api({
   test_that("fetchSeries mocked", {
     amzn <- fetchSeries(function_nm = "time_series_daily", symbol = "amzn", outputsize = "compact", datatype = "json")
     bad <- fetchSeries(function_nm = "time_series_daily", symbol = "mr_potato_head", outputsize = "compact", datatype = "json")
